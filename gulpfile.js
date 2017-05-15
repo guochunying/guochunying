@@ -20,7 +20,7 @@ gulp.task("jsmin",function(){
         // 压缩js
         .pipe(uglify())
         //合并
-        .pipe(concat("man.js"))
+        //.pipe(concat("man.js"))
 
         //模块化的打包
         .pipe(browserify({
@@ -31,10 +31,13 @@ gulp.task("jsmin",function(){
         // 重命名
         // .pipe(rename("main.js"))
         .pipe(gulp.dest('./build/js'))
-
         .pipe(rev.manifest())//生成一个rev-manifest.json
         .pipe(gulp.dest("./rev/js"))   //将rev-manifest.json存放到
  })
+gulp.task("common",function(){
+    gulp.src('src/js/common/*.js')
+        .pipe(gulp.dest('./build/js/common'))
+})
 gulp.task("cssmin",function(){
          //压缩css
     gulp.src('src/css/*.sass')
@@ -47,6 +50,11 @@ gulp.task("cssmin",function(){
         .pipe(rev.manifest())//生成一个rev-manifest.json
         .pipe(gulp.dest("./rev/css"))   //将rev-manifest.json存放到
 })
+gulp.task("cssmin",function(){
+    gulp.src('src/css/*.css')
+        .pipe(minify_css())
+        .pipe(gulp.dest('./build/css'))
+})
 gulp.task("html",function(){
     //gulp.src('src/html/*.html')
     //    .pipe(gulp.dest('./build/html'));
@@ -56,50 +64,56 @@ gulp.task("miages",function(){
         .pipe(imagemin())
         .pipe(gulp.dest('./build/img'));
 })
-
+//var deferred = Q.defer()
+//gulp.task("static",['cssmin','jsmin','miages'],function(){
+//    deferred.resolve()
+//})
   //文件名替换
     gulp.task("htmlrev",function(){
-        gulp.src(['./rev/**/*.json','./src/html/*.html'])//-读取rev-manifest.json 文件以及需要进行
-            .pipe(revCollector({
-                replaceReved:true,
-                dirReplacements:{
-                    'css':'../css',
-                    'js':'../js/'
-
-                }
-            }))
-         .pipe(gulp.dest('./build/html'));
+       setTimeout(function () {
+           gulp.src(['./rev/**/*.json','./src/html/*.html'])//-读取rev-manifest.json 文件以及需要进行
+               .pipe(revCollector({
+                   replaceReved:true,
+                   dirReplacements:{
+                       'css':'../css',
+                       'js':'../js/'
+                   }
+               }))
+               .pipe(gulp.dest('./build/html'));
+       },3000)
     })
-
-gulp.task("build",["jsmin","cssmin","html","miages","htmlrev"])
+//gulp.task("build",["htmlrev"])
+gulp.task("build",["jsmin","cssmin","miages",'html',"htmlrev","common"])
 
    gulp.task("webserver",["build"],function(){
        //watch监视文件，并且可以在文件发生改动时候做一些事情
-       gulp.watch("./src/css/*.sass",["cssmin"])
-       gulp.watch("./src/html/*.html",["html"])
-       gulp.src("build")
-           //web服务热启动
-           .pipe(webserver({
-               port:8000,
-               livereload: true,
-               directoryListing: true,
-               middleware:function(req,res,next){
-                   const reqPath = url.parse(req.url).pathname//请求的地址
-                   const routes= datajson.data()
-                   routes.forEach(function(i){
-                       console.log(i.route)
-                       console.log(reqPath)
-                       if(i.route == reqPath){
-                           i.handle(res,req,next)
-                       }
-                       next()
-                   })
+       gulp.watch("src/css/*.sass",["cssmin"])
+       gulp.watch("src/html/*.html",["html"])
+       setTimeout(function () {
+           gulp.src("./build")
+               //web服务热启动
+               .pipe(webserver({
+                   port:8090,
+                   livereload: true,
+                   directoryListing: true,
+                   middleware:function(req,res,next){
+                       const reqPath = url.parse(req.url).pathname//请求的地址
+                       const routes= datajson.data()
+                       routes.forEach(function(i){
+                           console.log(i.route)
+                           console.log(reqPath)
+                           if(i.route == reqPath){
+                               i.handle(res,req,next)
+                           }
+                           next()
+                       })
 
-               },
-               open: "html/index.html"
-           }))
+                   },
+                   open: "html/filters.html"
+               }))
+       },3000)
+
    })
-
 gulp.task("default",function(){
               // 将你的默认的任务代码放在这
 
