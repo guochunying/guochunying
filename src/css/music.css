@@ -1,0 +1,97 @@
+body, .cont {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  display: -webkit-flex;
+  flex-direction: column;
+  font-size: 0.12rem; }
+
+.header {
+  height: 0.44rem;
+  position: relative;
+  background: #2ca2f9; }
+  .header .pic {
+    width: 1.02rem;
+    height: 0.23rem;
+    margin-left: 0.08rem;
+    margin-top: 0.1rem;
+    margin-right: 0.1rem; }
+  .header span {
+    position: absolute;
+    top: 0.1rem;
+    width: 0.8rem;
+    height: 0.24rem;
+    display: inline-block;
+    border: 1px solid #fff;
+    border-radius: 0.05rem;
+    text-align: center;
+    line-height: 0.24rem;
+    color: #fff; }
+  .header a {
+    position: absolute;
+    right: 0.05rem;
+    top: 0.15rem;
+    color: #fff; }
+    .header a i img {
+      width: 0.17rem;
+      height: 0.17rem; }
+
+.content {
+  overflow-y: scroll;
+  flex: 1; }
+  .content .list {
+    display: -webkit-flex;
+    line-height: 0.45rem;
+    font-size: 0.14rem;
+    border-bottom: 1px solid #f8f8f8;
+    margin-bottom: 0.05rem; }
+    .content .list .bg {
+      border-bottom: 3px solid #33a3f5; }
+    .content .list li {
+      flex: 1;
+      text-align: center; }
+  .content .swiper-pic .banner img {
+    width: 100%;
+    height: 1.4rem; }
+  .content .scroll .main {
+    height: 900px; }
+    .content .scroll .main li {
+      line-height: 0.56rem;
+      border-bottom: 1px solid #e5e5e5;
+      margin-left: 0.1rem;
+      display: block;
+      font-size: 0.14rem;
+      position: relative; }
+      .content .scroll .main li i {
+        position: absolute;
+        right: 0.1rem;
+        top: 0.1rem;
+        font-size: 0.14rem; }
+        .content .scroll .main li i img {
+          width: 0.15rem;
+          height: 0.15rem; }
+
+.swipe {
+  margin-left: 0.1rem; }
+  .swipe dl {
+    height: 0.97rem;
+    display: -webkit-flex;
+    border-bottom: 1px solid #e5e5e5;
+    padding-top: 0.1rem;
+    box-sizing: border-box;
+    position: relative; }
+    .swipe dl dt {
+      margin-right: 0.2rem;
+      width: 0.76rem; }
+      .swipe dl dt img {
+        width: 100%;
+        height: 0.76rem; }
+    .swipe dl dd p {
+      margin-top: 0.2rem;
+      font-size: 0.14rem;
+      margin-bottom: 0.1rem; }
+    .swipe dl dd span {
+      color: #9b9b9b; }
+
+/*# sourceMappingURL=music.css.map */
